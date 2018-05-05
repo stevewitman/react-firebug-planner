@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-firebase'
+
 class Main extends Component {
+  componentDidMount() {
+    this.props.setValue('hi from main')
+  }
   render() {
+    const { value } = this.props;
     return (
       <div className="App">
-        <p className="App-intro">
           [Main Component]
-        </p>
+          { value }
       </div>
     );
   }
 }
 
-export default Main;
+const MapPropsToFirebase = (props, ref) => ({
+  value: 'helloWorld',
+  setValue: value => ref('helloWorld').set(value)
+})
+
+export default connect(MapPropsToFirebase)(Main );
